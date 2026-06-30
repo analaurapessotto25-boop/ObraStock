@@ -1,0 +1,12 @@
+{
+  "framework": "vite",
+  "installCommand": "npm --prefix \"Construtora/Construir software conforme arquivos\" install",
+  "buildCommand": "npm --prefix \"Construtora/Construir software conforme arquivos\" run build",
+  "outputDirectory": "Construtora/Construir software conforme arquivos/dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
