@@ -1,8 +1,8 @@
 {
   "framework": "vite",
-  "installCommand": "npm --prefix \"Construtora/Construir software conforme arquivos\" install",
-  "buildCommand": "npm --prefix \"Construtora/Construir software conforme arquivos\" run build",
-  "outputDirectory": "Construtora/Construir software conforme arquivos/dist",
+  "installCommand": "cd \"Login Control\" && npm install",
+  "buildCommand": "cd \"Login Control\" && npm run build",
+  "outputDirectory": "Login Control/dist",
   "rewrites": [
     {
       "source": "/(.*)",

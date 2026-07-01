@@ -1,0 +1,271 @@
+Aja como um web designer e programador sênior especializado em sistemas empresariais, logística, dashboards profissionais, experiência do usuário e desenvolvimento front-end com HTML, CSS e JavaScript puro.
+
+Contexto:
+Estou desenvolvendo um projeto para o curso técnico em Logística, no terceiro ano do Novo Ensino Médio. O sistema deve representar as competências do técnico em logística, ou seja, planejar, implementar e supervisionar processos logísticos de forma integrada, sustentável e tecnológica.
+
+Muitas empresas ainda fazem o controle logístico de forma manual, usando cadernos, planilhas desorganizadas ou sistemas separados. Isso causa problemas como falta de produtos, excesso de estoque, atrasos nas entregas, dificuldade para controlar fornecedores, falhas na armazenagem, baixa produtividade, custos elevados de transporte e falta de indicadores para tomada de decisão.
+
+A proposta é criar um sistema web chamado “LogiControl — Sistema de Gestão Integrada Logística”. O objetivo do sistema é centralizar os principais processos logísticos em uma única plataforma, permitindo controlar suprimentos, estoque, armazenagem, produção, distribuição, transporte, indicadores e ações corretivas.
+
+O sistema deve ser moderno, profissional, responsivo e fácil de usar. Ele deve parecer um sistema real usado por empresas de logística, indústrias, centros de distribuição ou comércios que precisam controlar seus processos logísticos.
+
+Tarefa:
+Crie um sistema web completo chamado “LogiControl — Sistema de Gestão Integrada Logística”, utilizando HTML, CSS e JavaScript puro, sem backend. O sistema deve funcionar como uma SPA, ou seja, o menu lateral deve trocar o conteúdo das telas sem recarregar a página.
+
+O sistema deve salvar os dados no localStorage do navegador, permitindo que os cadastros e alterações continuem salvos mesmo após atualizar a página.
+
+O sistema deve conter uma interface com:
+
+* menu lateral fixo;
+* cabeçalho superior;
+* dashboard com cards;
+* tabelas organizadas;
+* formulários de cadastro;
+* botões modernos;
+* alertas visuais;
+* gráficos simples;
+* layout responsivo;
+* visual corporativo e tecnológico.
+
+Paleta visual sugerida:
+
+* azul escuro para o menu lateral;
+* azul médio para botões e destaques;
+* branco para os cards;
+* cinza claro para o fundo;
+* verde para situações positivas;
+* amarelo para atenção;
+* vermelho para situações críticas.
+
+Módulos do sistema:
+
+1. Dashboard Geral:
+   Criar uma tela inicial com cards e indicadores principais:
+
+* total de produtos cadastrados;
+* produtos abaixo do estoque mínimo;
+* pedidos de compra pendentes;
+* entregas atrasadas;
+* ocupação do armazém;
+* fornecedores ativos;
+* ordens de produção abertas;
+* não conformidades abertas.
+
+Também incluir gráficos simples, como:
+
+* gráfico de estoque por produto;
+* gráfico de entregas no prazo x entregas atrasadas;
+* gráfico de ocupação do armazém;
+* gráfico de não conformidades por setor.
+
+2. Produtos e Estoque:
+   Criar um módulo para cadastro e controle de produtos.
+   Campos necessários:
+
+* código do produto;
+* nome do produto;
+* categoria;
+* unidade de medida;
+* quantidade atual;
+* estoque mínimo;
+* estoque máximo;
+* estoque de segurança;
+* localização no armazém;
+* validade, quando aplicável.
+
+Funcionalidades:
+
+* cadastrar produto;
+* editar produto;
+* excluir produto;
+* buscar produto;
+* registrar entrada de estoque;
+* registrar saída de estoque;
+* mostrar alerta quando o produto estiver abaixo do estoque mínimo;
+* mostrar status do estoque: adequado, atenção ou crítico.
+
+3. Suprimentos:
+   Criar um módulo para controle de fornecedores e pedidos de compra.
+   Campos para fornecedores:
+
+* nome do fornecedor;
+* CNPJ fictício;
+* contato;
+* prazo médio de entrega;
+* tipo de material fornecido;
+* avaliação do fornecedor.
+
+Campos para pedidos de compra:
+
+* produto;
+* fornecedor;
+* quantidade solicitada;
+* data do pedido;
+* previsão de entrega;
+* status: pendente, em andamento, entregue ou atrasado.
+
+Funcionalidades:
+
+* cadastrar fornecedores;
+* registrar pedidos de compra;
+* calcular automaticamente a necessidade de compra usando a fórmula:
+  necessidade de compra = demanda prevista + estoque de segurança - estoque atual;
+* exibir alerta quando for necessário comprar mais produtos;
+* acompanhar status dos pedidos.
+
+4. Armazenagem:
+   Criar um módulo para controle da capacidade do armazém.
+   Campos necessários:
+
+* capacidade total do armazém;
+* espaço ocupado;
+* percentual de ocupação;
+* setor ou rua do estoque;
+* tipo de material armazenado.
+
+Funcionalidades:
+
+* calcular automaticamente a ocupação do armazém;
+* indicar se a ocupação está adequada, em atenção ou crítica;
+* mostrar produtos por localização;
+* alertar excesso de ocupação;
+* alertar produtos próximos do vencimento.
+
+5. Produção:
+   Criar um módulo para controle básico de produção.
+   Campos necessários:
+
+* número da ordem de produção;
+* produto produzido;
+* quantidade planejada;
+* quantidade produzida;
+* materiais necessários;
+* data de início;
+* data de conclusão;
+* status: planejada, em produção, concluída ou atrasada.
+
+Funcionalidades:
+
+* cadastrar ordem de produção;
+* acompanhar produção planejada x realizada;
+* calcular perdas de produção;
+* alertar falta de matéria-prima;
+* mostrar indicador de eficiência produtiva.
+
+6. Distribuição e Transporte:
+   Criar um módulo para controle de entregas e transporte.
+   Campos necessários:
+
+* número da entrega;
+* cliente;
+* produto;
+* quantidade;
+* endereço ou região;
+* transportadora ou veículo;
+* data prevista;
+* data real de entrega;
+* custo do frete;
+* status: aguardando separação, em transporte, entregue, atrasado ou devolvido.
+
+Funcionalidades:
+
+* cadastrar entregas;
+* controlar status da entrega;
+* calcular entregas no prazo e entregas atrasadas;
+* calcular custo médio de transporte;
+* mostrar alerta para entregas atrasadas;
+* exibir indicador OTIF, considerando entregas feitas no prazo e completas.
+
+7. Indicadores Logísticos:
+   Criar uma tela com os principais KPIs logísticos:
+
+* estoque mínimo;
+* estoque máximo;
+* estoque de segurança;
+* giro de estoque;
+* acuracidade de estoque;
+* lead time dos fornecedores;
+* entregas no prazo;
+* OTIF;
+* ocupação do armazém;
+* índice de ruptura;
+* custo médio de transporte;
+* quantidade de não conformidades.
+
+Apresentar os indicadores em cards e gráficos simples. Usar cores para facilitar a interpretação:
+
+* verde para bom desempenho;
+* amarelo para atenção;
+* vermelho para problema crítico.
+
+8. Não Conformidades e Ações Corretivas:
+   Criar um módulo para registrar problemas logísticos e planos de ação.
+   Campos da não conformidade:
+
+* código da ocorrência;
+* setor: suprimentos, armazenagem, produção, distribuição ou transporte;
+* descrição do problema;
+* data da ocorrência;
+* responsável;
+* gravidade: baixa, média ou alta;
+* status: aberta, em análise, em correção ou concluída.
+
+Criar também um plano de ação no modelo 5W2H:
+
+* What: o que será feito;
+* Why: por que será feito;
+* Where: onde será feito;
+* When: quando será feito;
+* Who: quem será responsável;
+* How: como será feito;
+* How much: quanto custará.
+
+Funcionalidades:
+
+* cadastrar não conformidade;
+* editar ocorrência;
+* excluir ocorrência;
+* criar plano de ação;
+* acompanhar status da correção;
+* mostrar quantidade de problemas por setor.
+
+9. Relatórios:
+   Criar uma tela de relatórios com filtros e resumo dos dados.
+   Relatórios possíveis:
+
+* relatório de estoque;
+* relatório de produtos abaixo do mínimo;
+* relatório de pedidos de compra;
+* relatório de entregas atrasadas;
+* relatório de produção;
+* relatório de não conformidades;
+* relatório de indicadores logísticos.
+
+Adicionar botão para imprimir relatório.
+
+Requisitos técnicos:
+
+* Criar os arquivos separados:
+
+  * index.html
+  * style.css
+  * script.js
+* Usar apenas HTML, CSS e JavaScript puro.
+* Não usar backend.
+* Não usar banco de dados externo.
+* Salvar os dados no localStorage.
+* O sistema deve abrir pelo arquivo index.html.
+* O layout deve ser responsivo para computador, tablet e celular.
+* O sistema deve vir com alguns dados fictícios iniciais para demonstração.
+* Deve ser possível adicionar, editar, excluir e buscar registros.
+* Deve ter botão para restaurar dados iniciais.
+* Deve ter botão para limpar dados.
+* Deve ter botão para exportar os dados em JSON.
+* Deve ter botão para importar dados em JSON.
+* Deve ter botão para imprimir relatório.
+
+Estilo visual:
+O sistema deve ter aparência moderna, limpa e corporativa, parecida com um sistema profissional de gestão logística. Use cards com sombras leves, tabelas bem organizadas, botões arredondados, ícones simples, menu lateral elegante e dashboard com indicadores visuais.
+
+Objetivo final:
+Criar um sistema que demonstre, de forma prática, as competências do técnico em logística: planejamento, implementação e supervisão dos processos de suprimentos, armazenagem, produção, distribuição e transporte, utilizando tecnologia, indicadores, sustentabilidade, organização e melhoria contínua.
