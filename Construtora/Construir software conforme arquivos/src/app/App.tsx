@@ -3,12 +3,15 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, LineChart, Line, Legend
 } from "recharts";
+import SkuGeneratorView from "./modules/SkuGeneratorView";
+import StockCalculatorView from "./modules/StockCalculatorView";
 import {
   Package, Users, Building2, ArrowDownToLine, ArrowUpFromLine, RotateCcw,
   Wrench, Layers, AlertTriangle, FileText, History, LayoutDashboard,
   LogOut, Search, Plus, Edit2, Trash2, Bell, X, Check, Eye,
   Menu, ChevronDown, Download, Printer, RefreshCw, QrCode, ShieldAlert,
-  TrendingUp, PackageCheck, PackageX, Clock, DollarSign, HardHat, BarChart2
+  TrendingUp, PackageCheck, PackageX, Clock, DollarSign, HardHat, BarChart2,
+  FileSpreadsheet
 } from "lucide-react";
 
 // ─── Types ─────────────────────────────────────────────────────────────────
@@ -67,8 +70,9 @@ type Movement = {
 
 type View =
   | "dashboard" | "products" | "employees" | "constructions"
+  | "sku-generator"
   | "entries" | "withdrawals" | "returns" | "kits" | "phases"
-  | "alerts" | "reports" | "history";
+  | "stock-calculator" | "alerts" | "reports" | "history";
 
 // ─── Initial Data ────────────────────────────────────────────────────────────
 
@@ -405,6 +409,7 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
 const NAV_ITEMS: { id: View; label: string; icon: React.ElementType; group: string }[] = [
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, group: "Principal" },
   { id: "products", label: "Produtos / SKU", icon: Package, group: "Cadastros" },
+  { id: "sku-generator", label: "Gerador de SKU", icon: QrCode, group: "Cadastros" },
   { id: "employees", label: "Funcionários", icon: Users, group: "Cadastros" },
   { id: "constructions", label: "Obras & Almox.", icon: Building2, group: "Cadastros" },
   { id: "entries", label: "Entrada de Materiais", icon: ArrowDownToLine, group: "Movimentações" },
@@ -412,6 +417,7 @@ const NAV_ITEMS: { id: View; label: string; icon: React.ElementType; group: stri
   { id: "returns", label: "Devolução", icon: RotateCcw, group: "Movimentações" },
   { id: "kits", label: "Kits de Ferramentas", icon: Wrench, group: "Gestão" },
   { id: "phases", label: "Fases da Obra", icon: Layers, group: "Gestão" },
+  { id: "stock-calculator", label: "Calculadora de Estoque", icon: BarChart2, group: "Gestão" },
   { id: "alerts", label: "Estoque & Alertas", icon: ShieldAlert, group: "Gestão" },
   { id: "reports", label: "Relatórios", icon: FileText, group: "Análise" },
   { id: "history", label: "Histórico", icon: History, group: "Análise" },
@@ -1579,10 +1585,149 @@ function ReportsView({ withdrawals, products, employees, constructions }: { with
     return sum + (p ? p.unitPrice * w.quantity : 0);
   }, 0);
 
+  type ReportData = {
+    title: string;
+    headers: string[];
+    rows: string[][];
+    summary?: { label: string; value: string }[];
+  };
+
+  function sanitizeFileName(value: string) {
+    return value
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-zA-Z0-9_-]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .toLowerCase();
+  }
+
+  function escapeHtml(value: string | number) {
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  function getCurrentReport(): ReportData {
+    if (tab === "employee") {
+      return {
+        title: "Relatório por Funcionário",
+        headers: ["Funcionário", "Retiradas", "Itens Totais", "Perdas", "Índice de Perda"],
+        rows: byEmployee.map(e => [
+          e.name,
+          String(e.count),
+          String(e.qty),
+          String(e.losses),
+          e.qty > 0 ? `${((e.losses / e.qty) * 100).toFixed(1)}%` : "-",
+        ]),
+      };
+    }
+
+    if (tab === "product") {
+      return {
+        title: "Relatório por Produto",
+        headers: ["SKU", "Produto", "Qtd Retirada", "Perdas (qtd)", "Valor de Perdas"],
+        rows: byProduct.map(p => [
+          p.sku,
+          p.name,
+          String(p.qty),
+          p.losses > 0 ? String(p.losses) : "-",
+          p.lossValue > 0 ? fmtCurrency(p.lossValue) : "-",
+        ]),
+      };
+    }
+
+    if (tab === "construction") {
+      return {
+        title: "Relatório por Obra",
+        headers: ["Obra", "Nº de Retiradas", "Itens Consumidos"],
+        rows: byConstruction.map(c => [c.name, String(c.count), String(c.qty)]),
+      };
+    }
+
+    const lossRows = byProduct.filter(p => p.losses > 0).map(p => {
+      const prod = products.find(x => x.sku === p.sku);
+      return [
+        p.name,
+        String(p.losses),
+        prod ? fmtCurrency(prod.unitPrice) : "-",
+        fmtCurrency(p.lossValue),
+      ];
+    });
+
+    return {
+      title: "Relatório de Perdas Financeiras",
+      headers: ["Produto", "Qtd Perdida", "Valor Unitário", "Prejuízo"],
+      rows: lossRows.length ? lossRows : [["Nenhuma perda registrada.", "-", "-", "-"]],
+      summary: [{ label: "Total de Perdas Estimadas", value: fmtCurrency(totalLossValue) }],
+    };
+  }
+
+  function buildReportHtml(report: ReportData) {
+    const generatedAt = new Date().toLocaleString("pt-BR");
+    const summaryHtml = report.summary?.length
+      ? `<table class="summary"><tbody>${report.summary.map(item => `<tr><th>${escapeHtml(item.label)}</th><td>${escapeHtml(item.value)}</td></tr>`).join("")}</tbody></table>`
+      : "";
+
+    return `<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>${escapeHtml(report.title)}</title>
+  <style>
+    body { font-family: Arial, sans-serif; color: #0d1b2a; }
+    h1 { color: #1a3a5c; margin-bottom: 4px; }
+    p { color: #5a7090; font-size: 12px; margin-top: 0; }
+    table { border-collapse: collapse; width: 100%; margin-top: 16px; }
+    th { background: #1a3a5c; color: #ffffff; text-align: left; }
+    th, td { border: 1px solid #d9e2ec; padding: 8px; font-size: 12px; }
+    .summary { width: auto; min-width: 320px; margin-top: 18px; }
+    .summary th { background: #f97316; }
+  </style>
+</head>
+<body>
+  <h1>ObraStock - ${escapeHtml(report.title)}</h1>
+  <p>Gerado em ${escapeHtml(generatedAt)}</p>
+  ${summaryHtml}
+  <table>
+    <thead><tr>${report.headers.map(header => `<th>${escapeHtml(header)}</th>`).join("")}</tr></thead>
+    <tbody>
+      ${report.rows.map(row => `<tr>${row.map(cell => `<td>${escapeHtml(cell)}</td>`).join("")}</tr>`).join("")}
+    </tbody>
+  </table>
+</body>
+</html>`;
+  }
+
+  function downloadReport(format: "word" | "excel") {
+    const report = getCurrentReport();
+    const html = buildReportHtml(report);
+    const isWord = format === "word";
+    const extension = isWord ? "doc" : "xls";
+    const mime = isWord ? "application/msword;charset=utf-8" : "application/vnd.ms-excel;charset=utf-8";
+    const date = new Date().toISOString().slice(0, 10);
+    const blob = new Blob(["\ufeff", html], { type: mime });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+
+    a.href = url;
+    a.download = `obrastock-${sanitizeFileName(report.title)}-${date}.${extension}`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <div>
       <SectionHeader title="Relatórios" subtitle="Análises consolidadas de movimentações, perdas e consumo"
-        actions={<Btn variant="secondary" onClick={() => window.print()}><Printer size={14} /> Imprimir</Btn>} />
+        actions={
+          <>
+            <Btn variant="secondary" onClick={() => downloadReport("word")}><FileText size={14} /> Word</Btn>
+            <Btn variant="secondary" onClick={() => downloadReport("excel")}><FileSpreadsheet size={14} /> Excel</Btn>
+            <Btn variant="secondary" onClick={() => window.print()}><Printer size={14} /> Imprimir</Btn>
+          </>
+        } />
 
       <div className="flex gap-2 mb-6 flex-wrap">
         {([["employee", "Por Funcionário"], ["product", "Por Produto"], ["construction", "Por Obra"], ["losses", "Perdas Financeiras"]] as const).map(([id, label]) => (
@@ -1816,6 +1961,7 @@ export default function App() {
         <main className="flex-1 overflow-y-auto p-6">
           {view === "dashboard" && <Dashboard products={products} employees={employees} constructions={constructions} withdrawals={withdrawals} entries={entries} movements={movements} />}
           {view === "products" && <ProductsView products={products} setProducts={setProducts} />}
+          {view === "sku-generator" && <SkuGeneratorView />}
           {view === "employees" && <EmployeesView employees={employees} setEmployees={setEmployees} withdrawals={withdrawals} products={products} />}
           {view === "constructions" && <ConstructionsView constructions={constructions} setConstructions={setConstructions} warehouses={warehouses} setWarehouses={setWarehouses} />}
           {view === "entries" && <EntriesView entries={entries} setEntries={setEntries} products={products} setProducts={setProducts} warehouses={warehouses} employees={employees} addMovement={addMovement} />}
@@ -1823,6 +1969,7 @@ export default function App() {
           {view === "returns" && <ReturnsView returns={returns} setReturns={setReturns} withdrawals={withdrawals} setWithdrawals={setWithdrawals} products={products} setProducts={setProducts} employees={employees} addMovement={addMovement} />}
           {view === "kits" && <KitsView kits={kits} setKits={setKits} products={products} />}
           {view === "phases" && <PhasesView products={products} />}
+          {view === "stock-calculator" && <StockCalculatorView />}
           {view === "alerts" && <AlertsView products={products} withdrawals={withdrawals} employees={employees} />}
           {view === "reports" && <ReportsView withdrawals={withdrawals} products={products} employees={employees} constructions={constructions} />}
           {view === "history" && <HistoryView movements={movements} products={products} employees={employees} constructions={constructions} />}

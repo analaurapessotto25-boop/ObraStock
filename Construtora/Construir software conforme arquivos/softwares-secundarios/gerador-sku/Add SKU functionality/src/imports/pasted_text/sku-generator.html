@@ -1,0 +1,181 @@
+**PERSONA:**
+Você é um web designer e programador sênior, especialista em criar sistemas web modernos, responsivos, intuitivos e profissionais usando HTML, CSS e JavaScript puro. Você entende de experiência do usuário, organização visual, lógica de cadastro, automação de códigos e sistemas de controle de estoque.
+
+**CONTEXTO:**
+Estou desenvolvendo um sistema chamado **ObraStock**, voltado para construtoras que ainda fazem o controle de materiais de forma manual, muitas vezes em cadernos ou planilhas simples. Esse controle gera problemas como produtos duplicados, dificuldade para identificar materiais parecidos, erros no registro de entrada e saída, falta de padronização e perda de tempo na busca por itens.
+
+Para resolver parte desse problema, quero criar um software secundário chamado **Gerador Inteligente de SKU — ObraStock**. Esse sistema terá como objetivo criar automaticamente códigos SKU para os produtos usados em construtoras.
+
+O SKU será como uma identidade única para cada produto, facilitando o cadastro, a busca, o controle de estoque e a futura integração com o sistema principal ObraStock.
+
+Exemplo de SKU:
+**MAT-CIM-CP2-50KG-VOT-001**
+
+Onde:
+
+* **MAT** = categoria do produto, como Material
+* **CIM** = nome do produto, como Cimento
+* **CP2** = tipo ou modelo
+* **50KG** = medida ou tamanho
+* **VOT** = marca
+* **001** = número sequencial automático
+
+O sistema deve ser simples, direto e fácil de usar, pensado para almoxarifados de construtoras, obras e empresas que precisam organizar seus materiais de forma mais profissional.
+
+**TAREFA:**
+Crie um sistema web completo chamado **Gerador Inteligente de SKU — ObraStock**.
+
+O sistema deve conter:
+
+1. **Tela principal moderna e profissional**
+
+   * Cabeçalho com o nome do sistema.
+   * Subtítulo explicando que o sistema gera códigos SKU para produtos da construção civil.
+   * Layout limpo, responsivo e fácil de usar.
+   * Visual corporativo, moderno e tecnológico.
+   * Cores relacionadas ao ObraStock, usando tons de azul, cinza, branco e detalhes em verde.
+
+2. **Formulário para geração de SKU**
+   O formulário deve ter os seguintes campos:
+
+   * Categoria do produto.
+   * Nome do produto.
+   * Tipo ou modelo.
+   * Medida, peso ou tamanho.
+   * Marca.
+   * Setor ou obra.
+   * Observações adicionais.
+
+3. **Categorias disponíveis**
+   O usuário deve conseguir escolher categorias como:
+
+   * Materiais
+   * Ferramentas
+   * EPI
+   * Hidráulica
+   * Elétrica
+   * Pintura
+   * Acabamento
+   * Máquinas
+   * Limpeza
+   * Outros
+
+4. **Geração automática do SKU**
+   Ao preencher os campos, o sistema deve gerar automaticamente um código SKU seguindo o padrão:
+
+   **CATEGORIA-PRODUTO-TIPO-MEDIDA-MARCA-NÚMERO**
+
+   Exemplo:
+
+   * Cimento CP2 50kg Votoran → **MAT-CIM-CP2-50KG-VOT-001**
+   * Disco de corte 110mm Bosch → **FER-DIS-CORTE-110MM-BOS-002**
+   * Luva de segurança tamanho M → **EPI-LUV-SEG-M-PLAS-003**
+
+5. **Padronização automática**
+   O sistema deve transformar os textos digitados em códigos curtos, usando as três primeiras letras principais de cada informação.
+   Exemplo:
+
+   * Materiais → MAT
+   * Cimento → CIM
+   * Bosch → BOS
+   * Votoran → VOT
+
+   O sistema também deve deixar tudo em letras maiúsculas e remover acentos, espaços e caracteres especiais desnecessários.
+
+6. **Prévia do SKU**
+   O sistema deve mostrar em destaque o SKU gerado antes do cadastro.
+   Deve ter um botão para copiar o SKU.
+
+7. **Cadastro do produto**
+   Depois de gerar o SKU, o usuário deve conseguir salvar o produto em uma tabela.
+
+8. **Tabela de produtos cadastrados**
+   A tabela deve mostrar:
+
+   * SKU
+   * Categoria
+   * Produto
+   * Tipo/modelo
+   * Medida
+   * Marca
+   * Setor/obra
+   * Data de cadastro
+   * Ações
+
+9. **Ações da tabela**
+   Cada produto cadastrado deve permitir:
+
+   * Editar
+   * Excluir
+   * Copiar SKU
+
+10. **Busca e filtros**
+    O sistema deve permitir:
+
+* Buscar produto por nome ou SKU.
+* Filtrar por categoria.
+* Filtrar por setor/obra.
+
+11. **Evitar duplicidade**
+    O sistema deve avisar quando o usuário tentar cadastrar um produto muito parecido ou com o mesmo SKU já existente.
+
+12. **Cards de resumo**
+    Na parte superior ou lateral, crie cards com:
+
+* Total de produtos cadastrados.
+* Total de categorias usadas.
+* Último SKU gerado.
+* Quantidade de produtos por categoria.
+
+13. **Armazenamento local**
+    O sistema deve salvar os dados no **localStorage**, para que os produtos cadastrados continuem aparecendo mesmo depois de atualizar a página.
+
+14. **Botões extras**
+    Inclua botões para:
+
+* Limpar formulário.
+* Exportar produtos em JSON.
+* Importar produtos por JSON.
+* Restaurar dados de exemplo.
+* Apagar todos os produtos.
+
+15. **Dados de exemplo**
+    O sistema deve iniciar com alguns produtos fictícios de construção civil, como:
+
+* Cimento CP2 50kg Votoran
+* Disco de corte 110mm Bosch
+* Luva de segurança tamanho M
+* Tubo PVC 3/4 Tigre
+* Cabo elétrico 2,5mm
+* Tinta branca 18L
+* Parafuso sextavado
+* Capacete de segurança
+
+16. **Design**
+    O visual deve ser:
+
+* Moderno
+* Profissional
+* Responsivo
+* Organizado
+* Fácil para pessoas leigas usarem
+* Com cards, botões arredondados, sombras suaves, ícones simples e tabela bem organizada
+
+17. **Integração futura**
+    Deixe o sistema com aparência de módulo do ObraStock, como se futuramente ele fosse integrado ao sistema principal de controle de estoque da construtora.
+
+**FORMATO:**
+Crie o projeto em **HTML, CSS e JavaScript puro**, sem backend e sem banco de dados externo.
+
+Entregue os arquivos separados:
+
+* **index.html**
+* **style.css**
+* **script.js**
+
+O sistema deve funcionar abrindo o arquivo **index.html** no navegador.
+
+Não use frameworks.
+Não use React.
+Não use banco de dados.
+Use apenas HTML, CSS e JavaScript puro com localStorage.

@@ -1,0 +1,154 @@
+Você é um web designer e programador sênior, especialista em criar sistemas web modernos, simples, responsivos e funcionais usando HTML, CSS e JavaScript puro.
+
+Contexto:
+Estou desenvolvendo um projeto de software para ajudar construtoras a melhorarem o controle de estoque de seus materiais. Atualmente, muitas empresas ainda fazem esse controle de forma manual, em cadernos ou planilhas simples, o que dificulta saber a quantidade ideal de produtos que devem ser mantidos no estoque.
+
+O problema é que alguns materiais, mesmo sendo de baixo valor individual, como disco de corte, luvas, parafusos, brocas, cimento, argamassa, rejunte e EPIs, são usados em grande quantidade nas obras. Por isso, quando não existe controle adequado, a empresa pode sofrer com falta de materiais, compras emergenciais, desperdícios, excesso de produtos parados e aumento de custos.
+
+Neste primeiro momento, quero desenvolver um software simples, que funcione como uma calculadora inteligente de estoque. O objetivo é permitir que a empresa cadastre seus produtos e calcule automaticamente três informações principais:
+
+* Estoque mínimo;
+* Estoque de segurança;
+* Estoque máximo.
+
+Esse sistema será uma primeira etapa do projeto. Posteriormente, ele poderá ser integrado a um software maior de controle de estoque para construtoras.
+
+Tarefa:
+Crie um sistema web chamado “Calculadora de Estoque Inteligente”, voltado para o cálculo de estoque mínimo, estoque máximo e estoque de segurança de produtos utilizados em construtoras.
+
+O sistema deve ter visual moderno, simples, profissional e responsivo, com aparência ligada à construção civil. Use tons de azul, cinza, branco e detalhes em laranja ou amarelo para destacar alertas e informações importantes.
+
+O sistema deve ter uma única tela principal, organizada em formato de painel, contendo:
+
+1. Cabeçalho
+   Criar um cabeçalho com:
+
+* Nome do sistema: Calculadora de Estoque Inteligente;
+* Subtítulo explicativo: Calcule o estoque mínimo, máximo e de segurança dos seus produtos;
+* Visual moderno e profissional.
+
+2. Formulário de Cadastro e Cálculo
+   Criar um formulário para o usuário preencher os dados do produto.
+
+O formulário deve conter os seguintes campos:
+
+* Nome do produto;
+* Categoria;
+* Unidade de medida;
+* Estoque atual;
+* Consumo médio diário;
+* Tempo de reposição em dias;
+* Dias extras de segurança;
+* Lote de compra;
+* Custo unitário.
+
+O sistema deve calcular automaticamente:
+
+Estoque mínimo:
+Fórmula: consumo médio diário × tempo de reposição
+
+Estoque de segurança:
+Fórmula: consumo médio diário × dias extras de segurança
+
+Estoque máximo:
+Fórmula: estoque mínimo + estoque de segurança + lote de compra
+
+Sugestão de compra:
+Fórmula: estoque máximo - estoque atual
+
+Valor estimado da compra:
+Fórmula: sugestão de compra × custo unitário
+
+3. Resultado do Cálculo
+   Após o usuário preencher os dados e clicar em “Calcular Estoque”, o sistema deve mostrar cards com:
+
+* Estoque atual;
+* Estoque mínimo;
+* Estoque de segurança;
+* Estoque máximo;
+* Sugestão de compra;
+* Valor estimado da compra;
+* Status do estoque.
+
+O status deve seguir a seguinte lógica:
+
+* Se o estoque atual for menor que o estoque mínimo: mostrar “Crítico — Comprar com urgência”;
+* Se o estoque atual estiver entre o estoque mínimo e o estoque mínimo + estoque de segurança: mostrar “Atenção — Estoque próximo do limite”;
+* Se o estoque atual estiver entre o nível de segurança e o estoque máximo: mostrar “Adequado — Estoque controlado”;
+* Se o estoque atual for maior que o estoque máximo: mostrar “Excesso — Produto acima do ideal”.
+
+Usar cores para facilitar a identificação:
+
+* Vermelho para crítico;
+* Amarelo para atenção;
+* Verde para adequado;
+* Azul para excesso.
+
+4. Tabela de Produtos Calculados
+   Abaixo dos resultados, criar uma tabela que salve os produtos calculados.
+
+A tabela deve mostrar:
+
+* Produto;
+* Categoria;
+* Unidade;
+* Estoque atual;
+* Estoque mínimo;
+* Estoque de segurança;
+* Estoque máximo;
+* Sugestão de compra;
+* Valor estimado;
+* Status.
+
+A tabela deve permitir:
+
+* Buscar produto pelo nome;
+* Excluir produto;
+* Limpar todos os dados;
+* Salvar os dados no localStorage para não perder as informações ao atualizar a página.
+
+5. Dados de Exemplo
+   O sistema deve vir com alguns produtos de exemplo para demonstrar o funcionamento:
+
+* Disco de corte;
+* Cimento;
+* Argamassa;
+* Luva de proteção;
+* Broca;
+* Parafuso;
+* Rejunte;
+* Tinta;
+* Capacete de segurança.
+
+6. Design
+   O sistema deve ter:
+
+* Layout limpo e organizado;
+* Cards modernos;
+* Botões arredondados;
+* Tabela bem formatada;
+* Campos de formulário claros;
+* Alertas coloridos;
+* Sombras suaves;
+* Ícones simples;
+* Visual profissional;
+* Responsividade para computador, tablet e celular.
+
+Formato:
+Crie o sistema usando apenas:
+
+* HTML;
+* CSS;
+* JavaScript puro.
+
+Não use backend, banco de dados ou frameworks.
+
+O sistema deve abrir pelo arquivo index.html e salvar os dados no localStorage.
+
+Entregue os arquivos separados:
+
+* index.html;
+* style.css;
+* script.js.
+
+O código deve ser completo, funcional, organizado e comentado.
